@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricMind</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet"> 
+    <!-- External CSS file -->
+</head>
+<body>
+    <div class="container text-center">
+        <!-- App Name and Punchline -->
+        <h1>CricMind</h1>
+        <p class="punchline">"Predict the Final Score!"</p>
+
+        <!-- ICC T20 World Cup 2024 Image -->
+        <img src="/static/images/title_img.jpg" alt="ICC T20 World Cup 2024" class=" img-fluid mb-4" id="title-image">
+
+        <div class="row">
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <!-- Batting Team Image -->
+                <img id="batting_team_image" class="team-image" src="" alt="Batting Team">
+            </div>
+
+            <div class="col-md-8">
+                <form method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="batting_team">Select batting team</label>
+                            <select class="form-control" name="batting_team" id="batting_team">
+                                <option value="">Select Team</option>
+                                {% for team in teams %}
+                                <option value="{{ team }}">{{ team }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="bowling_team">Select bowling team</label>
+                            <select class="form-control" name="bowling_team" id="bowling_team">
+                                <option value="">Select Team</option>
+                                {% for team in teams %}
+                                <option value="{{ team }}">{{ team }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="city">Select city</label>
+                            <select class="form-control" name="city" id="city">
+                                {% for city in cities %}
+                                <option value="{{ city }}">{{ city }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="current_score">Current Score</label>
+                            <input type="number" class="form-control" name="current_score" id="current_score" placeholder="Enter current score">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="overs">Overs Done (works for over > 5)</label>
+                            <input type="number" step="0.1" class="form-control" name="overs" id="overs" placeholder="Enter overs">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="wickets">Wickets Out</label>
+                            <input type="number" class="form-control" name="wickets" id="wickets" placeholder="Enter wickets">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="last_five">Runs scored in last 5 overs</label>
+                            <input type="number" class="form-control" name="last_five" id="last_five" placeholder="Enter runs">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Predict Score</button>
+                </form>
+
+                {% if prediction %}
+                <div class="alert alert-info mt-4 text-center" role="alert">
+                    <h2>Predicted Score - {{ prediction }}</h2>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <!-- Bowling Team Image -->
+                <img id="bowling_team_image" class="team-image" src="" alt="Bowling Team">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/static/js/script.js"></script> 
+    <!-- External JS file -->
+</body>
+</html>
