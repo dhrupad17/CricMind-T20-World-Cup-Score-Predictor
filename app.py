@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import pickle
 import pandas as pd
+import os
 
 app = Flask(__name__)
 
@@ -36,13 +37,13 @@ def index():
 
         balls_left = 120 - (overs * 6)
         wickets_left = 10 - wickets
-        crr = current_score / overs
+        crr = current_score / overs if overs > 0 else 0  # Prevent division by zero
 
         # Create the input dataframe
         input_df = pd.DataFrame(
             {'batting_team': [batting_team], 'bowling_team': [bowling_team], 'city': [city], 
              'current_score': [current_score], 'balls_left': [balls_left], 
-             'wicket_left': [wickets_left],  'current_run_rate': [crr], 'last_five': [last_five]}
+             'wicket_left': [wickets_left], 'current_run_rate': [crr], 'last_five': [last_five]}
         )
 
         # Predict the result
@@ -52,4 +53,5 @@ def index():
     return render_template('index.html', teams=sorted(teams), cities=sorted(cities), prediction=prediction)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)  # Updated for deployment
