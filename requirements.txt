@@ -2,3 +2,4 @@ flask
 pandas
 scikit-learn
 xgboost
+gunicorn==20.1.0
